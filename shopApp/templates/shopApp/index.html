@@ -1,0 +1,44 @@
+<html>
+	<!-- Basic In-Line stylesheet -->
+<head>
+	<title>HomePage</title>
+	<style>
+		th, td {
+			text-align: left;
+			vertical-align: text-top;
+		  }
+	</style>
+</head>
+
+<h1>Home</h1> 
+
+
+<table style="width:100%">
+	<tr>
+		<th style="width:5%">Game ID</th>
+		<th style="width:75%">Game Name</th>
+		<th style="width:4%">Price</th>
+		<th style="width:5%">Age Rating</th>
+		<th style="width:6%">Primary Genre</th>
+		<th style="width:5%">More Details</th>
+	</tr>
+
+{% for x in games %}
+	<tr>
+		<td>{{ x.gameID }}</td>
+		<td>{{ x.gameName }}</td>
+		<td>${{ x.price }}</td>
+		<td>{{ x.ageRating }}</td>
+		<td>{{ x.primaryGenre }}</td>
+		<td>
+			<form method="post" action="appDetails/">
+		    {% csrf_token %}
+			<button class="selectButton" id="Selection" name="Selection" value={{ x.gameID }} >More Details</button>
+			</form>
+		</td>
+	</tr>
+{% endfor %}
+
+</table>
+</body>
+</html>

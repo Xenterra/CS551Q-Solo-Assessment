@@ -1,0 +1,35 @@
+<html>
+	<!-- Basic In-Line stylesheet -->
+<head>
+	<title>{{ gName }} Details</title>
+	<style>
+		th, td {
+			text-align: left;
+			vertical-align: text-top;
+		  }
+	</style>
+</head>
+
+<h1> {{ gName }}</h1> 
+<h2> {{ gDetail.subtitle }}</h2>
+
+<table style="width:100%">
+	<tr><th>Game ID </th>						<td>{{ gDetail.gameID }} </td></tr>
+	<tr><th>Average User Rating </th>			<td>{{ gDetail.averageUserRating }} </td></tr>
+	<tr><th>Number of Rating </th>				<td>{{ gDetail.numberOfRating }} </td></tr>
+	<tr><th>In-App Purchases </th>				<td>{{ gDetail.inAppPurchases }} </td></tr>
+	<tr><th>Description </th>					<td>{{ gDetail.description }} </td></tr>
+	<tr><th>Developer </th>						<td>{{ gDetail.developer }} </td></tr>
+	<tr><th>Languages </th>						<td>{{ gDetail.languages }} </td></tr>
+	<tr><th>Size </th>							<td>{{ gDetail.size }} bytes </td></tr>
+	<tr><th>Genres </th>						<td>{{ gDetail.genres }} </td></tr>
+	<tr><th>Original Release Date </th>			<td>{{ gDetail.originalReleaseDate }} </td></tr>
+	<tr><th>Most Recent Update </th>	<td>{{ gDetail.CurrentVersionReleaseDate }} </td></tr>
+
+	<tr><th>IconURL </th>						<td> <img src={{ gDetail.iconURL }} alt="alternatetext" width="100" height="100">  </td></tr>
+
+	<tr><th>Link to App Page </th>				<td><a href={{ gDetail.appURL }}> More...</a> </td></tr>
+</table>
+
+</body>
+</html>
