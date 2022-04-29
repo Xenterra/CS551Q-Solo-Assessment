@@ -35,11 +35,10 @@ class Command(BaseCommand):
 			count = 0;
 			next(reader) # skip the header line
 			for row in reader:
-				count += 1;
 				if row[0] != '':
 					gdList = gameDetails.objects.create(
 					uniqueid = count,
-					gameID = row[1],
+					gameID = gameList.objects.get(gameID=row[1]),
 					appURL = row[0],
 					subtitle = row[3],
 					iconURL = row[4],
@@ -54,6 +53,7 @@ class Command(BaseCommand):
 					originalReleaseDate = row[16],
 					CurrentVersionReleaseDate = row[17],
 					)
+					count += 1;
 					gdList.save()
 				print("Completed Row "+str(count)+":",row[1],row[2],row[13])
 			print("Details List Complete")

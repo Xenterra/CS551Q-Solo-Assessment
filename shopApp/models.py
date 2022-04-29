@@ -13,7 +13,7 @@ class gameList(models.Model):
 
 class gameDetails(models.Model):
 	uniqueid = models.IntegerField(primary_key=True)
-	gameID = models.IntegerField()
+	gameID = models.ForeignKey(gameList, on_delete=models.CASCADE, null=True)
 	appURL = models.CharField(max_length=1000)
 	subtitle = models.CharField(max_length=50)
 	iconURL = models.CharField(max_length=1000)
