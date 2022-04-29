@@ -2,13 +2,18 @@
 	<!-- Basic In-Line stylesheet -->
 <head>
 	<title>Statistics</title>
-	<style>
-		
+	<style>	
 		
 	</style>
 </head>
 <body>
-	
+<table style="width:100%">
+	<tr>
+		<th><a href="/">Home</a></th>
+		<th><a href="/search">Search</a></th>
+		<th><a href="/statistics">Stats</a></th>
+	</tr>
+</table>	
 <h2>Total Apps by Genre</h2>
 <canvas id="genreChart"></canvas>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -33,11 +38,9 @@
 });
 </script>
 
-
 <br>
+
 <h2>Apps by Average Review Score</h2>
-
-
 <canvas id="reviewScoreChart"></canvas>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 	<script type= 'text/javascript'>
@@ -83,6 +86,8 @@
 	}
 });
 </script>
+
+<br>
 
 <h2>Apps by Average Review Score</h2>
 <canvas id="pointerChart"><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

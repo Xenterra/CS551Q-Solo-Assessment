@@ -9,9 +9,15 @@
 		  }
 	</style>
 </head>
-
+<body>
+<table style="width:100%">
+	<tr>
+		<th><a href="/">Home</a></th>
+		<th><a href="/search">Search</a></th>
+		<th><a href="/statistics">Stats</a></th>
+	</tr>
+</table>
 <h1>Home</h1> 
-
 
 <table style="width:100%">
 	<tr>
@@ -27,12 +33,12 @@
 	<tr>
 		<td>{{ x.gameID }}</td>
 		<td>{{ x.gameName }}</td>
-		<td>${{ x.price }}</td>
+		<td>{{ x.price }}</td>
 		<td>{{ x.ageRating }}</td>
 		<td>{{ x.primaryGenre }}</td>
 		<td>
 			<form method="post" action="appDetails/">
-		    {% csrf_token %}
+			{% csrf_token %}
 			<button class="selectButton" id="Selection" name="Selection" value={{ x.gameID }} >More Details</button>
 			</form>
 		</td>

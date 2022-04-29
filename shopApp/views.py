@@ -15,6 +15,51 @@ def details(request):
         return render(request, "details.html", {'gDetail' : gDetail, 'gName' : gName})
     return render(request, "details.html")
 
+def search(request):
+    selected = ""
+    criteria = ""
+    ordering = ""
+    asc_desc = ""
+    if request.method == "POST":
+        search   = request.POST.get('selected','')
+        criteria = request.POST.get('criteria','')
+        ordering = request.POST.get('ordering','')
+        asc_desc = request.POST.get('asc_desc','')
+        results = ""
+        results1 = ""
+
+        if asc_desc == "DESC":
+            ordering = "-"+str(ordering)
+
+        if search == "gameName":
+            if criteria != "":
+                results = gameList.objects.all().filter(gameName__contains=criteria).order_by(ordering)
+        elif search == "genre":
+            if criteria != "":
+                results1 = gameDetails.objects.all().filter(genres__contains=criteria)
+        elif search == "developer":
+            if criteria != "":
+                results1 = gameDetails.objects.all().filter(developer__contains=criteria)
+
+
+
+        context = {
+                "selected":selected,
+                "criteria":criteria,
+                "ordering":ordering,
+                "asc_desc":asc_desc,
+                "results":results,
+                "results1":results1,
+                }
+        return render(request, "search.html", context)
+    context = {
+                "selected":selected,
+                "criteria":criteria,
+                "ordering":ordering,
+                "asc_desc":asc_desc,
+                }
+    return render(request, "search.html", context)
+
 def stats(request):
     #Bar Chart Data Code
     games = gameDetails.objects.all()

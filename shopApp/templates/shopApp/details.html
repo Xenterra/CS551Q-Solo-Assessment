@@ -9,12 +9,20 @@
 		  }
 	</style>
 </head>
+<body>
+<table style="width:100%">
+	<tr>
+		<th><a href="/">Home</a></th>
+		<th><a href="/search">Search</a></th>
+		<th><a href="/statistics">Stats</a></th>
+	</tr>
+</table>
 
 <h1> {{ gName }}</h1> 
 <h2> {{ gDetail.subtitle }}</h2>
 
 <table style="width:100%">
-	<tr><th>Game ID </th>					<td>{{ gDetail.gameID }} </td></tr>
+	<tr><th>Game ID </th>					<td>{{ gDetail.gameID.gameID }} </td></tr>
 	<tr><th>Average User Rating </th>		<td>{{ gDetail.averageUserRating }} </td></tr>
 	<tr><th>Number of Rating </th>			<td>{{ gDetail.numberOfRating }} </td></tr>
 	<tr><th>In-App Purchases </th>			<td>{{ gDetail.inAppPurchases }} </td></tr>
