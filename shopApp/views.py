@@ -1,7 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import  render, redirect
 from .models import gameList, gameDetails
+from .forms import NewUserForm
+from django.contrib.auth import login
+from django.contrib import messages
 
 # Create your views here.
+def register_request(request):
+	if request.method == "POST":
+		form = NewUserForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			login(request, user)
+			messages.success(request, "Registration successful." )
+			return redirect("index")
+		messages.error(request, "Unsuccessful registration. Invalid information.")
+	form = NewUserForm()
+	return render (request=request, template_name="register.html", context={"register_form":form})
+
 def index(request):
     games = gameList.objects.all()
     return render(request, "index.html", {'games' : games})
@@ -20,6 +35,7 @@ def search(request):
     criteria = ""
     ordering = ""
     asc_desc = ""
+    hide = ""
     if request.method == "POST":
         search   = request.POST.get('selected','')
         criteria = request.POST.get('criteria','')
@@ -27,7 +43,7 @@ def search(request):
         asc_desc = request.POST.get('asc_desc','')
         results = ""
         results1 = ""
-
+        hide ="Y"
         if asc_desc == "DESC":
             ordering = "-"+str(ordering)
 
@@ -40,9 +56,6 @@ def search(request):
         elif search == "developer":
             if criteria != "":
                 results1 = gameDetails.objects.all().filter(developer__contains=criteria)
-
-
-
         context = {
                 "selected":selected,
                 "criteria":criteria,
@@ -50,8 +63,10 @@ def search(request):
                 "asc_desc":asc_desc,
                 "results":results,
                 "results1":results1,
+                "hide":hide,
                 }
         return render(request, "search.html", context)
+
     context = {
                 "selected":selected,
                 "criteria":criteria,
@@ -59,6 +74,12 @@ def search(request):
                 "asc_desc":asc_desc,
                 }
     return render(request, "search.html", context)
+
+
+def cart(request):
+    games = gameList.objects.filter(primaryGenre="Education")
+    return render(request, "cart.html", {'games' : games})
+
 
 def stats(request):
     #Bar Chart Data Code

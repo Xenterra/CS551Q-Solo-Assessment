@@ -1,17 +1,27 @@
 <html>
-	<!-- Basic In-Line stylesheet -->
 <head>
 	<title>Statistics</title>
 	<style>	
-		
+		th, td {
+			text-align: left;
+			vertical-align: text-top;
+		}	
 	</style>
 </head>
+
+	{% if user.is_authenticated %}
+		<h4>User: {{ user.get_username }} <a href="{% url 'logout'%}?next={{request.path}}">Logout</a></h4>
+	{% else %}
+		<h4><a href="{% url 'login'%}?next={{request.path}}">Login</a></h4>
+	{% endif %}
+	
 <body>
 <table style="width:100%">
 	<tr>
 		<th><a href="/">Home</a></th>
 		<th><a href="/search">Search</a></th>
 		<th><a href="/statistics">Stats</a></th>
+		<th><a href="/cart">Cart</a></th>
 	</tr>
 </table>	
 <h2>Total Apps by Genre</h2>
@@ -39,7 +49,7 @@
 </script>
 
 <br>
-
+	{% if user.is_authenticated %}
 <h2>Apps by Average Review Score</h2>
 <canvas id="reviewScoreChart"></canvas>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -88,7 +98,7 @@
 </script>
 
 <br>
-
+	{% if user.is_staff %}
 <h2>Apps by Average Review Score</h2>
 <canvas id="pointerChart"><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </canvas>
@@ -144,6 +154,11 @@
 	}
 });
 </script>
-
+	{% else %}
+		<p> Other Charts are only visible as an Admin </p>
+	{% endif %}
+{% else %}
+	<p> Other Charts are only visible to Users </p>
+{% endif %}
 </body>
 </html>

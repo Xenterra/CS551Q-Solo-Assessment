@@ -1,5 +1,4 @@
 <html>
-	<!-- Basic In-Line stylesheet -->
 <head>
 	<title>SearchPage</title>
 	<style>
@@ -9,6 +8,13 @@
 		  }
 	</style>
 </head>
+
+	{% if user.is_authenticated %}
+		<h4>User: {{ user.get_username }} <a href="{% url 'logout'%}?next={{request.path}}">Logout</a></h4>
+	{% else %}
+		<h4><a href="{% url 'login'%}?next={{request.path}}">Login</a></h4>
+	{% endif %}
+
 <body>
 
 <table style="width:100%">
@@ -16,7 +22,7 @@
 		<th><a href="/">Home</a></th>
 		<th><a href="/search">Search</a></th>
 		<th><a href="/statistics">Stats</a></th>
-
+		<th><a href="/cart">Cart</a></th>
 	</tr>
 </table>
 
@@ -54,19 +60,19 @@
 
 	<br><br>
 
-	<input type="submit">
+	<input type="submit" value="Search">
 </form>
-
+{% for y in hide %}
 <table style="width:100%">
 	<tr>
 		<th style="width:5%">Game ID</th>
 		<th style="width:75%">Game Name</th>
 		<th style="width:4%">Price</th>
-		<th style="width:5%">Age Rating</th>
+		<th style="width:3%">Ages</th>
 		<th style="width:6%">Primary Genre</th>
 		<th style="width:5%">More Details</th>
 	</tr>
-
+{% endfor %}
 {% for x in results %}
 	<tr>
 		<td>{{ x.gameID }}</td>

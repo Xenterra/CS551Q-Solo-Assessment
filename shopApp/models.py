@@ -31,3 +31,9 @@ class gameDetails(models.Model):
 
 	class Meta:
 		db_table = "gameDetails"
+
+class shoppingCart(models.Model):
+	uniqueid = models.IntegerField(primary_key=True)
+	gameID = models.ForeignKey(gameList, on_delete=models.CASCADE, null=True)
+	#customerID = models.ForeignKey(loginList, on_delete=models.CASCADE, null=True)
+	
