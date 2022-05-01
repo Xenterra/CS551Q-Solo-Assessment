@@ -1,5 +1,5 @@
 from django.shortcuts import  render, redirect
-from .models import gameList, gameDetails
+from .models import gameList, gameDetails, shoppingCart
 from .forms import NewUserForm
 from django.contrib.auth import login
 from django.contrib import messages
@@ -77,7 +77,25 @@ def search(request):
 
 
 def cart(request):
-    games = gameList.objects.filter(primaryGenre="Education")
+    games = ""
+    if request.method == "POST":
+        checker = request.POST.get('check','')
+        selection = request.POST.get('Selection','')
+        print(selection)
+        if checker == "add":
+            userId   = request.POST.get('userId','')
+            g = shoppingCart(gameID=gameList.objects.get(gameID=selection), customerID=userId)
+            g.save()
+        elif checker == "delete":
+            shoppingCart.objects.filter(uniqueid=selection).delete()
+
+        games = shoppingCart.objects.filter(customerID=request.user.username)
+        return render(request, "cart.html", {'games' : games})
+    
+    if request.user.is_authenticated:
+        games = shoppingCart.objects.filter(customerID=request.user.username)
+        for x in games:
+            print(x.uniqueid, x.gameID, x.customerID)
     return render(request, "cart.html", {'games' : games})
 
 

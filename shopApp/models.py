@@ -28,12 +28,14 @@ class gameDetails(models.Model):
 	originalReleaseDate = models.DateField()
 	CurrentVersionReleaseDate = models.DateField()
 
-
 	class Meta:
 		db_table = "gameDetails"
 
 class shoppingCart(models.Model):
 	uniqueid = models.IntegerField(primary_key=True)
 	gameID = models.ForeignKey(gameList, on_delete=models.CASCADE, null=True)
-	#customerID = models.ForeignKey(loginList, on_delete=models.CASCADE, null=True)
+	customerID = models.CharField(max_length=20)
+
+	class Meta:
+		db_table = "shoppingCart"
 	

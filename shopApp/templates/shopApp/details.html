@@ -45,6 +45,16 @@
 
 	<tr><th>Link to App Page </th>				<td><a href={{ gDetail.appURL }}> More...</a> </td></tr>
 </table>
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'cart'%}?next={{request.path}}">
+	{% csrf_token %}
+	<input type="hidden" id="check" name="check" value="add">
+	<input type="hidden" id="userId" name="userId" value={{ user.get_username }}>
+	<button class="selectButton" id="Selection" name="Selection" value={{ gDetail.gameID.gameID }} >Add to Basket</button>
+</form>
+{% else %}
+	<h4>Please Login if you wish to add this item to your shopping cart!</h4>
+{% endif %}
 
 </body>
 </html>
