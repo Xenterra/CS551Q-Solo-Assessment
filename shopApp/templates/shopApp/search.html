@@ -1,14 +1,23 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>SearchPage</title>
 	<style>
-		th, td {
+		table {
+			background-color: black;
+			bordercolor: black;
+			border: 1px solid;
+		}
+
+		th, td, tr {
+			background-color: white;
+			border: 1px solid;
+			bordercolor: black;
 			text-align: left;
 			vertical-align: text-top;
 		  }
 	</style>
 </head>
-
 	{% if user.is_authenticated %}
 		<h4>User: {{ user.get_username }} <a href="{% url 'logout'%}?next={{request.path}}">Logout</a></h4>
 	{% else %}
@@ -16,13 +25,15 @@
 	{% endif %}
 
 <body>
-
 <table style="width:100%">
 	<tr>
 		<th><a href="/">Home</a></th>
 		<th><a href="/search">Search</a></th>
 		<th><a href="/statistics">Stats</a></th>
 		<th><a href="/cart">Cart</a></th>
+			{% if user.is_staff %}
+		<th><a href="/admin">Admin</a></th>
+			{% endif %}
 	</tr>
 </table>
 
@@ -45,10 +56,10 @@
 	<br>
 
 	<p>Please select what you would like to sort by:</p>
-	<input type="radio" id="ordering" name="ordering" value="gameID">
-	<label for="ordering">Game ID</label>
 	<input type="radio" id="ordering" name="ordering" value="gameName" checked>
 	<label for="ordering">Name</label>
+	<input type="radio" id="ordering" name="ordering" value="gameID">
+	<label for="ordering">Game ID</label>
 	<input type="radio" id="ordering" name="ordering" value="price">
 	<label for="ordering">Price</label>
 

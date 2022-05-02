@@ -81,7 +81,7 @@ def cart(request):
     if request.method == "POST":
         checker = request.POST.get('check','')
         selection = request.POST.get('Selection','')
-        print(selection)
+        #print(selection)
         if checker == "add":
             userId   = request.POST.get('userId','')
             g = shoppingCart(gameID=gameList.objects.get(gameID=selection), customerID=userId)
@@ -94,8 +94,7 @@ def cart(request):
     
     if request.user.is_authenticated:
         games = shoppingCart.objects.filter(customerID=request.user.username)
-        for x in games:
-            print(x.uniqueid, x.gameID, x.customerID)
+
     return render(request, "cart.html", {'games' : games})
 
 

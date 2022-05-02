@@ -1,20 +1,29 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Statistics</title>
-	<style>	
-		th, td {
+	<style>
+		table {
+			background-color: black;
+			bordercolor: black;
+			border: 1px solid;
+		}
+
+		th, td, tr {
+			background-color: white;
+			border: 1px solid;
+			bordercolor: black;
 			text-align: left;
 			vertical-align: text-top;
-		}	
+		  }
 	</style>
 </head>
-
 	{% if user.is_authenticated %}
 		<h4>User: {{ user.get_username }} <a href="{% url 'logout'%}?next={{request.path}}">Logout</a></h4>
 	{% else %}
 		<h4><a href="{% url 'login'%}?next={{request.path}}">Login</a></h4>
 	{% endif %}
-	
+
 <body>
 <table style="width:100%">
 	<tr>
@@ -22,6 +31,9 @@
 		<th><a href="/search">Search</a></th>
 		<th><a href="/statistics">Stats</a></th>
 		<th><a href="/cart">Cart</a></th>
+			{% if user.is_staff %}
+		<th><a href="/admin">Admin</a></th>
+			{% endif %}
 	</tr>
 </table>	
 <h2>Total Apps by Genre</h2>

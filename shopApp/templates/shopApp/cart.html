@@ -1,14 +1,23 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Shopping Cart</title>
 	<style>
-		th, td {
+		table {
+			background-color: black;
+			bordercolor: black;
+			border: 1px solid;
+		}
+
+		th, td, tr {
+			background-color: white;
+			border: 1px solid;
+			bordercolor: black;
 			text-align: left;
 			vertical-align: text-top;
 		  }
 	</style>
 </head>
-
 	{% if user.is_authenticated %}
 		<h4>User: {{ user.get_username }} <a href="{% url 'logout'%}?next={{request.path}}">Logout</a></h4>
 	{% else %}
@@ -22,14 +31,17 @@
 		<th><a href="/search">Search</a></th>
 		<th><a href="/statistics">Stats</a></th>
 		<th><a href="/cart">Cart</a></th>
+			{% if user.is_staff %}
+		<th><a href="/admin">Admin</a></th>
+			{% endif %}
+
 	</tr>
 </table>
 
-<h1>Cart</h1> 
+<h1 name="cartPage">Cart</h1> 
 
 <table style="width:100%">
 	<tr>
-		<th style="width:5%">Game ID</th>
 		<th style="width:70%">Game Name</th>
 		<th style="width:4%">Price</th>
 		<th style="width:5%">Age Rating</th>
@@ -40,7 +52,6 @@
 
 {% for x in games %}
 	<tr>
-		<td>{{ x.gameID.gameID }}</td>
 		<td>{{ x.gameID.gameName }}</td>
 		<td>£{{ x.gameID.price }}</td>
 		<td>{{ x.gameID.ageRating }}</td>
