@@ -8,4 +8,6 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('cart/', views.cart, name='cart'),
     path('register/', views.register_request, name="register"),
+    path('purchase/', views.purchase, name="purchase"),
+    path('purchase/complete/', views.complete, name="complete"),
 ]

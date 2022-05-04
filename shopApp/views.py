@@ -1,8 +1,9 @@
 from django.shortcuts import  render, redirect
-from .models import gameList, gameDetails, shoppingCart
+from .models import gameList, gameDetails, shoppingCart, orders
 from .forms import NewUserForm
 from django.contrib.auth import login
 from django.contrib import messages
+from datetime import date
 
 # Create your views here.
 def register_request(request):
@@ -75,9 +76,9 @@ def search(request):
                 }
     return render(request, "search.html", context)
 
-
 def cart(request):
     games = ""
+    total = 0.0
     if request.method == "POST":
         checker = request.POST.get('check','')
         selection = request.POST.get('Selection','')
@@ -89,14 +90,51 @@ def cart(request):
         elif checker == "delete":
             shoppingCart.objects.filter(uniqueid=selection).delete()
 
-        games = shoppingCart.objects.filter(customerID=request.user.username)
-        return render(request, "cart.html", {'games' : games})
+        if request.user.is_authenticated:
+            games = shoppingCart.objects.filter(customerID=request.user.username)
+            for p in games:
+                total += p.gameID.price
+            total = round(total, 2)
+        return render(request, "cart.html", {'games' : games, 'total':total})
     
     if request.user.is_authenticated:
         games = shoppingCart.objects.filter(customerID=request.user.username)
+        for p in games:
+            total += p.gameID.price
+        total = round(total, 2)
+    return render(request, "cart.html", {'games' : games, 'total':total})
 
-    return render(request, "cart.html", {'games' : games})
+def purchase(request):
+    if request.method == "POST":
+        purchasePrice = request.POST.get('totalPrice','')
+        return render(request, "purchase.html", {'purchasePrice' : purchasePrice})
+    return render(request, "purchase.html")
 
+def complete(request):
+    if request.method == "POST":
+        purchasePrice = request.POST.get('totalPrice','')
+        Username = request.user.username
+        Email = request.POST.get('Email','')
+        today = date.today()
+        allItems = ""
+        cartItems = shoppingCart.objects.filter(customerID=Username)
+        for x in cartItems:
+            allItems += str(x.gameID.gameID)+", "
+
+        #print(Username , Email, purchasePrice, today,allItems)
+        newOrder = orders.objects.create(
+            customerID = Username,
+            customerEmail = Email,
+            totalPrice = purchasePrice,
+            purchaseDate = today,
+            productList = allItems,
+		)
+        obj = orders.objects.filter(customerID=Username).order_by('-uniqueid')[0]
+        print(obj.uniqueid, obj.customerID , obj.customerEmail, obj.totalPrice, obj.purchaseDate, obj.productList)
+        shoppingCart.objects.filter(customerID=Username).delete()
+        return render(request, "complete_purchase.html", {'obj':obj})
+
+    return render(request, "complete_purchase.html")
 
 def stats(request):
     #Bar Chart Data Code

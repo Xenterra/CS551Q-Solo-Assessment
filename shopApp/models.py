@@ -38,4 +38,16 @@ class shoppingCart(models.Model):
 
 	class Meta:
 		db_table = "shoppingCart"
+
+class orders(models.Model):
+	uniqueid = models.IntegerField(primary_key=True)
+	customerID = models.CharField(max_length=20)
+	customerEmail = models.CharField(max_length=20)
+	totalPrice = models.FloatField()
+	purchaseDate = models.DateField()
+	productList = models.CharField(max_length=200)
+
+
+	class Meta:
+		db_table = "orders"
 	

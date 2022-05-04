@@ -8,7 +8,6 @@
 			bordercolor: black;
 			border: 1px solid;
 		}
-
 		th, td, tr {
 			background-color: white;
 			border: 1px solid;
@@ -21,7 +20,7 @@
 	{% if user.is_authenticated %}
 		<h4 name="usernameHeading">User: {{ user.get_username }} <a href="{% url 'logout'%}?next={{request.path}}">Logout</a></h4>
 	{% else %}
-		<h4 name="noUsername"><a href="{% url 'login'%}?next={{request.path}}">Login</a></h4>
+		<h4><a href="{% url 'login'%}?next={{request.path}}" name="noUsername">Login</a></h4>
 	{% endif %}
 
 <body>
