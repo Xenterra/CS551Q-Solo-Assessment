@@ -9,9 +9,9 @@ from selenium.webdriver.common.by import By
 
 @given(u'we want to view a the cart')
 def user_on_index_page(context):
-	print("Cart Given Step Here:")
+	#print("Cart Given Step Here:")
 	base_url = urllib.request.url2pathname(context.test_case.live_server_url)
-	print(base_url)
+	#print(base_url)
 	open_url = urljoin(base_url,'/')
 	context.browser.get(open_url)
 
@@ -27,9 +27,9 @@ def cart_page_opens(context):
 
 @given(u'we are on the home page')
 def user_on_index_page(context):
-	print("Login Given Step Here:")
+	#print("Login Given Step Here:")
 	base_url = urllib.request.url2pathname(context.test_case.live_server_url)
-	print(base_url)
+	#print(base_url)
 	open_url = urljoin(base_url,'/')
 	context.browser.get(open_url)
 	
@@ -59,9 +59,9 @@ def browser_returns_to_home(context):
 
 @given(u'we want to view a product and have a product list')
 def user_on_index_page(context):
-	print("Product List Given Step Here:")
+	#print("Product List Given Step Here:")
 	base_url = urllib.request.url2pathname(context.test_case.live_server_url)
-	print(base_url)
+	#print(base_url)
 	open_url = urljoin(base_url,'/')
 	context.browser.get(open_url)
 

@@ -108,6 +108,7 @@ def purchase(request):
     if request.method == "POST":
         purchasePrice = request.POST.get('totalPrice','')
         return render(request, "purchase.html", {'purchasePrice' : purchasePrice})
+        
     return render(request, "purchase.html")
 
 def complete(request):
@@ -130,7 +131,7 @@ def complete(request):
             productList = allItems,
 		)
         obj = orders.objects.filter(customerID=Username).order_by('-uniqueid')[0]
-        print(obj.uniqueid, obj.customerID , obj.customerEmail, obj.totalPrice, obj.purchaseDate, obj.productList)
+        #print(obj.uniqueid, obj.customerID , obj.customerEmail, obj.totalPrice, obj.purchaseDate, obj.productList)
         shoppingCart.objects.filter(customerID=Username).delete()
         return render(request, "complete_purchase.html", {'obj':obj})
 
@@ -189,9 +190,6 @@ def stats(request):
             bNo = int((str(baseNo.gameID)[6])+(str(baseNo.gameID)[7])+(str(baseNo.gameID)[8]))%255
             genreColourList.append("rgba("+str(rNo)+","+str(gNo)+","+str(bNo)+")")
 
-    
-    #print(genreList)
-
 #Scatter Graph Data Code
     XcoordinateList = []
     YcoordinateList = []
@@ -201,6 +199,7 @@ def stats(request):
     c = ""
     lLength = 0
     games = gameDetails.objects.all()
+
     for m in games:
         a = m.numberOfRating
         b = m.gameID.price
