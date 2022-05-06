@@ -1,20 +1,19 @@
 # CS551Q-Solo-Assessment
 #### Codio Terminal Commands
 ##### Startup Commands
-These will need to be applied in order to start maintenance on the project
-git init #This prepares the project for github integration
-git pull git@github.com:Xenterra/CS551Q-Assessment.git master #pulls the files from the repository. May ask for confirmation.
+These will need to be applied in order to start maintenance on the project from a new device
+git init #This prepares the project for github integration, whether on setup or for pulling from an existing repository
+git pull git@github.com:Xenterra/CS551Q-Solo-Assessment.git master #pulls the files from the repository, when the remote is not set up. May ask for confirmation.
 source .venv/bin/activate 	# this activates the virtual environment
 python3 manage.py runserver 0.0.0.0:2500 #  the app locally  on port 2500, shown in the URL below
 
-https://meteoramigo-heliumalmond-2500.codio-box.uk
-(This will change depending on the codio box it is run in)
-
-#### GitHub Project Details
+##### GitHub Project Details
 GitHub Username: Xenterra
 GitHub Repository Name: CS551Q-Solo-Assessment.git
+Example Codio Box URL: https://meteoramigo-heliumalmond-2500.codio-box.uk
+(This will change depending on the codio box it is run in)
 
-##### GitHub  Commands
+##### All GitHub  Commands
 - git init 				  #create target folder for the Git Repository
 - git status              #check the current status of the GitHub repository
 - git add .               #add changes to the local repo
@@ -24,19 +23,31 @@ GitHub Repository Name: CS551Q-Solo-Assessment.git
 
 These commands are used to update the Git server and check the status 
 
-#### Heroku Commands
+##### Heroku Commands
 - git push heroku master	#commit the changes of Git's master branch to Heroku, this will redeploy as a new version
 - heroku status				#used to check how the Heroku deployment is progressing
 - heroku login				#used to initially setup connection with heroku
+-- Use 'heroku login -i' to complete the login within the terminal
 - heroku git:remote -a cs551q-solo-assessment	#used to initially setup connection between git and heroku
+- heroku config:set DISABLE_COLLECTSTATIC=0 #using either 0 or 1 to turn the function on or off for static integration
 
 Heroku URL: https://cs551q-solo-assessment.herokuapp.com/
 
-As Heroku is run automatically, use the status command to check its functioning well, and the 'heroku push' command to apply changes to a new version of the app
+As Heroku is run automatically, use the status command to check its functioning well, and the 'push heroku' command to apply changes to a new version of the app
 
-#### Pages
+##### Other Terminal Commands of note
+pip freeze > requirements.text #This command will create the txt file that records pip module versions, mainly for heroku.
+python3 manage.py makemigrations #Prep the system for changes to the models.py file. (Required for the next command to work)
+python3 manage.py migrate #Implement changes from the model.py file into the system.
+behave #When used while in the top folder, it will activate the automatic testing that has been created.
+python manage.py createsuperuser #used to create a new user with full access rights. Asks for further details upon entry.
+python3 database_fill.py #Used to initiate the program that converts the .csv file in the database for the system.
+python3 manage.py startapp shopApp #Creates the app folder that will hold the system functionality.
+python3 manage.py startapp mysite #creates the app folder that will hold the website information and the server specifications.
+
+#### Web Pages
 ##### These will follow either the Codio Box URL or the Heroku URL
-###### Created
+###### Main Created Pages
 - /						# Home Page
 - /appDetails/			# Details page for individual items
 - /statistics/			# Page for charts
@@ -48,12 +59,12 @@ As Heroku is run automatically, use the status command to check its functioning 
 
 ##### Registration Pages
 ###### These follow from the /account/ subset and were mainly from the University material
-- /login
-- /password_reset_complete
-- /password_reset_confirm
-- /password_reset_email
-- /password_reset_done
-- /password_reset_form
+- /login					# Page that contains the login form.
+- /password_reset_complete	# These pages form the password reset functionality, however this function is not fully implemented.
+- /password_reset_confirm	# These pages form the password reset functionality, however this function is not fully implemented.
+- /password_reset_email		# These pages form the password reset functionality, however this function is not fully implemented.
+- /password_reset_done		# These pages form the password reset functionality, however this function is not fully implemented.
+- /password_reset_form		# These pages form the password reset functionality, however this function is not fully implemented.
 
 #### Testing
 ##### Behave
@@ -66,7 +77,7 @@ The final test is to check that the user can add an item from the system to thei
 The steps below are a scenario test to be completed to test the viability of the system when used for it's intended purpose:
 1. Open the website's home page and click the Login button at the top left of the screen
 2. Complete the login form using a valid username and password combination.
-2a. If you don't already have an account, click the '+ Create Account' button and fill the form to make an account.
+2.a. If you don't already have an account, click the '+ Create Account' button and fill the form to make an account.
 3. As you should be on the home page, with a list of apps, click on one of the 'More Details' button present on the right side of the page
 4. You should now be on the details page for the app selected. Scroll to the bottom of the page and click the 'Add to Basket' button.
 **Result part 1:** You should now be on the basket page with only one item visable in the displayed list.
