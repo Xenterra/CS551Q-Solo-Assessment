@@ -25,7 +25,7 @@ SECRET_KEY = 'srw&nq89r=+7w_&be+#0k7-cil@ltg$#33xljvj-)0sr(d(b!^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cs551q-solo-assessment.herokuapp.com', 'platoleonid-squareparody-2500.codio-box.uk', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['cs551q-solo-assessment.herokuapp.com', 'meteoramigo-heliumalmond-2500.codio-box.uk', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sensor',
+    'shopApp',
+    'crispy_forms',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -58,7 +59,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates'),
-                 os.path.join(BASE_DIR, 'sensor', 'templates', 'sensor'),
+                 os.path.join(BASE_DIR, 'shopApp', 'templates', 'shopApp'),
                  ],
         'APP_DIRS': True,
         'OPTIONS': {

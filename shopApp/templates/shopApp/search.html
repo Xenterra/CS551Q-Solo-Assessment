@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SearchPage</title>
+	<style>
+		table {
+			background-color: black;
+			bordercolor: black;
+			border: 1px solid;
+		}
+
+		th, td, tr {
+			background-color: white;
+			border: 1px solid;
+			bordercolor: black;
+			text-align: left;
+			vertical-align: text-top;
+		  }
+	</style>
+</head>
+	{% if user.is_authenticated %}
+		<h4>User: {{ user.get_username }} <a href="{% url 'logout'%}?next={{request.path}}">Logout</a></h4>
+	{% else %}
+		<h4><a href="{% url 'login'%}?next={{request.path}}">Login</a></h4>
+	{% endif %}
+
+<body>
+<table style="width:100%">
+	<tr>
+		<th><a href="/">Home</a></th>
+		<th><a href="/search">Search</a></th>
+		<th><a href="/statistics">Stats</a></th>
+		<th><a href="/cart">Cart</a></th>
+			{% if user.is_staff %}
+		<th><a href="/admin">Admin</a></th>
+			{% endif %}
+	</tr>
+</table>
+
+<h1>Search Apps</h1> 
+<form method="post">
+	{% csrf_token %}
+	<p>Please select what you would like to search using:</p>
+	<input type="radio" id="selected" name="selected" value="gameName" checked>
+	<label for="selected">Game Name</label>
+	<input type="radio" id="selected" name="selected" value="developer">
+	<label for="selected">Developer</label>
+	<input type="radio" id="selected" name="selected" value="genre">
+	<label for="selected">Genre</label>
+
+	<br><br>
+
+	<label for="criteria">Enter your search criteria: </label>
+	<input type="text" id="criteria" name="criteria" value = {{criteria}}>
+
+	<br>
+
+	<p>Please select what you would like to sort by:</p>
+	<input type="radio" id="ordering" name="ordering" value="gameName" checked>
+	<label for="ordering">Name</label>
+	<input type="radio" id="ordering" name="ordering" value="gameID">
+	<label for="ordering">Game ID</label>
+	<input type="radio" id="ordering" name="ordering" value="price">
+	<label for="ordering">Price</label>
+
+	<br>
+	<input type="radio" id="asc_desc" name="asc_desc" value="ASC" checked>
+	<label for="asc_desc"><strong> Ascending</strong></label>
+	<input type="radio" id="asc_desc" name="asc_desc" value="DESC">
+	<label for="asc_desc"><strong> Descending </strong></label>
+
+	<br><br>
+
+	<input type="submit" value="Search">
+</form>
+{% for y in hide %}
+<table style="width:100%">
+	<tr>
+		<th style="width:5%">Game ID</th>
+		<th style="width:75%">Game Name</th>
+		<th style="width:4%">Price</th>
+		<th style="width:3%">Ages</th>
+		<th style="width:6%">Primary Genre</th>
+		<th style="width:5%">More Details</th>
+	</tr>
+{% endfor %}
+{% for x in results %}
+	<tr>
+		<td>{{ x.gameID }}</td>
+		<td>{{ x.gameName }}</td>
+		<td>{{ x.price }}</td>
+		<td>{{ x.ageRating }}</td>
+		<td>{{ x.primaryGenre }}</td>
+		<td>
+			<form method="post" action="/appDetails/">
+		    {% csrf_token %}
+			<button class="selectButton" id="Selection" name="Selection" value={{ x.gameID }} >More Details</button>
+			</form>
+		</td>
+	</tr>
+{% endfor %}
+{% for x in results1 %}
+	<tr>
+		<td>{{ x.gameID.gameID }}</td>
+		<td>{{ x.gameID.gameName }}</td>
+		<td>£{{ x.gameID.price }}</td>
+		<td>{{ x.gameID.ageRating }}</td>
+		<td>{{ x.gameID.primaryGenre }}</td>
+		<td>
+			<form method="post" action="appDetails/">
+		    {% csrf_token %}
+			<button class="selectButton" id="Selection" name="Selection" value={{ x.gameID }} >More Details</button>
+			</form>
+		</td>
+	</tr>
+{% endfor %}
+</table>
+</body>
+</html>

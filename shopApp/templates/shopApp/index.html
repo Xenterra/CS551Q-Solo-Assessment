@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HomePage</title>
+	<style>
+		table {
+			background-color: black;
+			bordercolor: black;
+			border: 1px solid;
+		}
+		th, td, tr {
+			background-color: white;
+			border: 1px solid;
+			bordercolor: black;
+			text-align: left;
+			vertical-align: text-top;
+		  }
+	</style>
+</head>
+	{% if user.is_authenticated %}
+		<h4 name="usernameHeading">User: {{ user.get_username }} <a href="{% url 'logout'%}?next={{request.path}}">Logout</a></h4>
+	{% else %}
+		<h4><a href="{% url 'login'%}?next={{request.path}}" name="noUsername">Login</a></h4>
+	{% endif %}
+
+<body>
+<table style="width:100%">
+	<tr>
+		<th><a href="/" name="homeLink">Home</a></th>
+		<th><a href="/search" name="searchLink">Search</a></th>
+		<th><a href="/statistics" name="statsLink">Stats</a></th>
+		<th><a href="/cart" name="cartLink">Cart</a></th>
+			{% if user.is_staff %}
+		<th><a href="/admin" name="adminLink">Admin</a></th>
+			{% endif %}
+	</tr>
+</table>
+<h1>Home</h1> 
+
+<table style="width:100%">
+	<tr>
+		<th style="width:5%">Game ID</th>
+		<th style="width:75%">Game Name</th>
+		<th style="width:4%">Price</th>
+		<th style="width:3%">Ages</th>
+		<th style="width:6%">Primary Genre</th>
+		<th style="width:5%">More Details</th>
+	</tr>
+
+{% for x in games %}
+	<tr>
+		<td>{{ x.gameID }}</td>
+		<td>{{ x.gameName }}</td>
+		<td>£{{ x.price }}</td>
+		<td>{{ x.ageRating }}</td>
+		<td>{{ x.primaryGenre }}</td>
+		<td>
+			<form method="post" action="appDetails/">
+			{% csrf_token %}
+			<button class="selectButton" id="Selection" name="Selection" value={{ x.gameID }} >More Details</button>
+			</form>
+		</td>
+	</tr>
+{% endfor %}
+
+</table>
+</body>
+</html>
